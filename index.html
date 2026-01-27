@@ -178,45 +178,6 @@
             line-height: 1.5;
         }
 
-        /* Status */
-        .status {
-            padding: 20px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .status-message {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 12px;
-            border: 1px solid var(--border);
-            font-size: 11px;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--good);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
         /* Download */
         .download {
             padding: 40px 0;
@@ -228,34 +189,6 @@
             font-weight: 500;
             color: var(--neutral);
             margin-bottom: 16px;
-        }
-
-        .download-links {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 24px;
-        }
-
-        .download-link {
-            padding: 12px 24px;
-            border: 1px solid var(--border);
-            color: var(--neutral);
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .download-link:hover {
-            border-color: var(--warning);
-            color: var(--warning);
-        }
-
-        .download-link.primary:hover {
-            border-color: var(--good);
-            color: var(--good);
         }
 
         .requirements {
@@ -350,17 +283,6 @@
                 font-size: 18px;
             }
 
-            .download-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .download-link {
-                width: 100%;
-                max-width: 240px;
-                text-align: center;
-            }
-
             .footer-links {
                 flex-direction: column;
                 gap: 12px;
@@ -381,7 +303,7 @@
             <section class="hero">
                 <h1>A background service that <span class="highlight">detects cheating</span> in Echo VR</h1>
                 <p>Runs silently. Monitors continuously. Requires no installation.</p>
-                <a href="#download" class="cta">Download</a>
+                <a href="https://github.com/isodash/echono" class="cta">Download</a>
             </section>
 
             <section class="features">
@@ -410,26 +332,15 @@
                         <p class="feature-desc">Optimized to use minimal resources. You won't notice it's running.</p>
                     </div>
                 </div>
-
-                <div class="status">
-                    <div class="status-message">Current Status</div>
-                    <div class="status-indicator">
-                        <div class="status-dot"></div>
-                        <span>Operational</span>
-                    </div>
-                </div>
             </section>
 
-            <section class="download" id="download">
+            <section class="download">
                 <h2>Download</h2>
                 <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 24px;">
                     Version 1.0.0 · Portable executable
                 </p>
                 
-                <div class="download-links">
-                    <a href="https://github.com/isodash/echono" class="download-link primary">Download</a>
-                    <a href="https://github.com/isodash/echono" class="download-link">View Source</a>
-                </div>
+                <a href="https://github.com/isodash/echono" class="cta" style="display: inline-block; margin-bottom: 32px;">Download from GitHub</a>
 
                 <div class="requirements">
                     <h3>Requirements</h3>
@@ -447,7 +358,6 @@
         <footer>
             <div class="footer-links">
                 <a href="https://github.com/isodash/echono">GitHub</a>
-                <a href="mailto:contact@echono.dev">Contact</a>
             </div>
             <div class="copyright">
                 © 2024 echono · Not affiliated with Ready At Dawn or Meta<br>
