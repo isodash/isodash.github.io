@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>echono · Echo VR anti-cheat</title>
+    <title>echono · integrity monitor for Echo VR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;350;400;450;500;550;600;650&family=JetBrains+Mono:wght@400;450;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;350;400;450;500;550;600;650&family=Inter:wght@300;350;400;450;500;550;600;650&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0c0f;
-            --bg-secondary: #111418;
-            --bg-tertiary: #181c21;
-            --text-primary: #f0f2f5;
-            --text-secondary: #a0a6b2;
-            --text-tertiary: #6c7280;
-            --accent-primary: #7cd992;
-            --accent-secondary: #6ac2e8;
-            --accent-warning: #ff6b7a;
-            --border-color: #2a303c;
-            --border-light: #3a404c;
-            --shadow-color: rgba(0, 0, 0, 0.4);
-            --shadow-heavy: rgba(0, 0, 0, 0.6);
-            --transition: 0.25s cubic-bezier(0.33, 0.85, 0.45, 0.98);
+            --bg-primary: #050609;
+            --bg-secondary: #0d0f13;
+            --bg-tertiary: #14171c;
+            --text-primary: #e8eaed;
+            --text-secondary: #8c929d;
+            --text-tertiary: #5c626d;
+            --accent-primary: #64d894;
+            --accent-secondary: #5ab4e0;
+            --accent-warning: #ff5c6c;
+            --border-color: #232730;
+            --border-light: #323640;
+            --glow-primary: rgba(100, 216, 148, 0.1);
+            --glow-secondary: rgba(90, 180, 224, 0.08);
+            --shadow-heavy: rgba(0, 0, 0, 0.7);
+            --transition: 0.3s cubic-bezier(0.33, 0.85, 0.45, 0.98);
         }
 
         * {
@@ -36,11 +37,33 @@
             background: var(--bg-primary);
         }
 
+        ::selection {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-light);
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.55;
+            line-height: 1.5;
             letter-spacing: -0.01em;
             font-weight: 400;
             -webkit-font-smoothing: antialiased;
@@ -48,16 +71,9 @@
             overflow-x: hidden;
         }
 
-        /* Typography */
-        h1, h2, h3, h4 {
-            font-weight: 550;
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
             letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-
-        p {
-            font-weight: 400;
-            letter-spacing: -0.01em;
         }
 
         /* Navigation */
@@ -65,12 +81,13 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 12, 15, 0.92);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border-bottom: 1px solid rgba(42, 48, 60, 0.3);
+            background: rgba(5, 6, 9, 0.88);
+            backdrop-filter: blur(16px) saturate(200%);
+            -webkit-backdrop-filter: blur(16px) saturate(200%);
+            border-bottom: 1px solid rgba(35, 39, 48, 0.3);
             z-index: 1000;
-            padding: 1.25rem 2rem;
+            padding: 1rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .nav-content {
@@ -82,18 +99,29 @@
         }
 
         .logo {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 550;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 450;
             letter-spacing: -0.025em;
             color: var(--text-primary);
             text-decoration: none;
             opacity: 0.9;
-            transition: opacity var(--transition);
+            transition: all var(--transition);
+            position: relative;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid transparent;
         }
 
         .logo:hover {
             opacity: 1;
+            border-color: var(--border-light);
+        }
+
+        .logo::before {
+            content: '>';
+            color: var(--accent-primary);
+            margin-right: 0.4rem;
+            opacity: 0.7;
         }
 
         .nav-links {
@@ -106,11 +134,11 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 450;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             transition: all var(--transition);
             position: relative;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.02em;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .nav-links a:hover {
@@ -118,37 +146,16 @@
         }
 
         .nav-links a::after {
-            content: '';
+            content: ';';
             position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent-primary);
-            transition: width 0.3s ease-out;
+            right: -0.6rem;
+            opacity: 0;
+            transition: opacity var(--transition);
+            color: var(--accent-primary);
         }
 
         .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            color: var(--bg-primary);
-            padding: 0.65rem 1.4rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 550;
-            font-size: 0.85rem;
-            transition: all var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            box-shadow: 0 4px 20px rgba(124, 217, 146, 0.15);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(124, 217, 146, 0.25);
+            opacity: 0.7;
         }
 
         /* Hero Section */
@@ -160,48 +167,49 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .hero-bg {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle at center, rgba(124, 217, 146, 0.03) 0%, transparent 70%);
             transform: translate(-50%, -50%);
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(90deg, transparent 24px, var(--border-color) 25px, transparent 26px, transparent 49px),
+                linear-gradient(0deg, transparent 24px, var(--border-color) 25px, transparent 26px, transparent 49px);
+            background-size: 50px 50px;
         }
 
         .hero-content {
             max-width: 720px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.25rem;
+            font-weight: 450;
             margin-bottom: 1.25rem;
             line-height: 1.05;
             letter-spacing: -0.03em;
+            color: var(--text-primary);
         }
 
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero h1 .accent {
+            color: var(--accent-primary);
             position: relative;
+            font-weight: 550;
         }
 
-        .hero h1 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        .hero h1 .accent::before {
+            content: '// ';
+            opacity: 0.5;
+            color: var(--accent-primary);
         }
 
         .hero p {
@@ -221,41 +229,82 @@
         .button-primary {
             background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
             color: var(--bg-primary);
-            padding: 0.9rem 2rem;
-            border-radius: 6px;
+            padding: 0.85rem 1.75rem;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: 550;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: all var(--transition);
             border: none;
-            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
             letter-spacing: 0.02em;
-            box-shadow: 0 4px 20px rgba(124, 217, 146, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .button-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(124, 217, 146, 0.3);
+        .button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .button-primary:hover::before {
+            left: 100%;
         }
 
         .button-secondary {
             background: transparent;
             color: var(--text-primary);
-            padding: 0.9rem 2rem;
-            border-radius: 6px;
+            padding: 0.85rem 1.75rem;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: all var(--transition);
             border: 1px solid var(--border-light);
-            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
             letter-spacing: 0.02em;
+            position: relative;
         }
 
         .button-secondary:hover {
             border-color: var(--accent-primary);
-            background: rgba(124, 217, 146, 0.05);
-            transform: translateY(-2px);
+            background: rgba(100, 216, 148, 0.05);
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .code-comment {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .code-keyword {
+            color: var(--accent-primary);
+        }
+
+        .code-string {
+            color: var(--accent-secondary);
+        }
+
+        .code-number {
+            color: #ff9d5c;
         }
 
         /* Features Section */
@@ -266,22 +315,28 @@
         }
 
         .section-header {
-            text-align: center;
             margin-bottom: 4.5rem;
         }
 
         .section-header h2 {
-            font-size: 2.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .section-header h2::before {
+            content: '// ';
+            color: var(--accent-primary);
+            opacity: 0.5;
         }
 
         .section-header p {
             color: var(--text-secondary);
-            font-size: 1.05rem;
+            font-size: 1rem;
             max-width: 500px;
-            margin: 0 auto;
         }
 
         .features-grid {
@@ -294,7 +349,7 @@
         .feature-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 6px;
             padding: 2rem;
             transition: all var(--transition);
             position: relative;
@@ -306,39 +361,44 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(124, 217, 146, 0.03) 100%);
-            opacity: 0;
-            transition: opacity var(--transition);
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            transform: scaleX(0);
+            transition: transform var(--transition);
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             border-color: var(--accent-primary);
-            box-shadow: 0 12px 40px var(--shadow-heavy);
         }
 
         .feature-card:hover::before {
-            opacity: 1;
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            font-size: 1.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
             margin-bottom: 1.25rem;
             color: var(--accent-primary);
-            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: inline-block;
+            opacity: 0.9;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-icon::before {
+            content: '>';
+            margin-right: 0.5rem;
+            opacity: 0.5;
         }
 
         .feature-card h3 {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 1.1rem;
-            font-weight: 550;
+            font-weight: 500;
             margin-bottom: 0.75rem;
             letter-spacing: -0.01em;
+            color: var(--text-primary);
         }
 
         .feature-card p {
@@ -348,52 +408,52 @@
         }
 
         /* How It Works */
-        .steps {
+        .process {
             display: flex;
             flex-direction: column;
             gap: 3rem;
             max-width: 720px;
             margin: 0 auto;
-            position: relative;
         }
 
-        .steps::before {
-            content: '';
-            position: absolute;
-            left: 24px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(180deg, transparent, var(--border-light), transparent);
-        }
-
-        .step {
+        .process-step {
             display: flex;
             gap: 2rem;
             align-items: flex-start;
-            position: relative;
         }
 
         .step-number {
             background: var(--bg-primary);
             color: var(--accent-primary);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 500;
             flex-shrink: 0;
-            border: 1px solid var(--border-light);
-            z-index: 1;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .step-number::after {
+            content: '→';
+            position: absolute;
+            right: -1.2rem;
+            color: var(--border-light);
+        }
+
+        .process-step:last-child .step-number::after {
+            display: none;
         }
 
         .step-content h3 {
-            font-size: 1.15rem;
-            font-weight: 550;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 500;
             margin-bottom: 0.5rem;
             letter-spacing: -0.01em;
         }
@@ -404,29 +464,23 @@
             line-height: 1.5;
         }
 
-        /* Download Section */
-        .download-section {
-            text-align: center;
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-            margin: 4rem 0;
-            border-radius: 12px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+        .step-content .code-inline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
             border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
+            color: var(--accent-secondary);
         }
 
-        .download-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        /* Download Section */
+        .download-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            position: relative;
+            border-top: 1px solid var(--border-color);
         }
 
         .download-info {
@@ -435,61 +489,71 @@
         }
 
         .download-info h2 {
-            font-size: 2.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
         }
 
         .download-info p {
             color: var(--text-secondary);
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
-        .system-requirements {
-            background: rgba(17, 20, 24, 0.8);
+        .requirements {
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             padding: 2rem;
             max-width: 500px;
             margin: 3rem auto;
-            text-align: left;
-            backdrop-filter: blur(10px);
         }
 
-        .system-requirements h3 {
-            font-size: 1rem;
+        .requirements h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
             margin-bottom: 1.25rem;
             color: var(--accent-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 550;
+            font-weight: 500;
         }
 
-        .system-requirements ul {
+        .requirements ul {
             list-style: none;
             color: var(--text-secondary);
         }
 
-        .system-requirements li {
+        .requirements li {
             margin-bottom: 0.75rem;
             padding-left: 1.25rem;
             position: relative;
             font-size: 0.9rem;
         }
 
-        .system-requirements li::before {
-            content: '→';
+        .requirements li::before {
+            content: '•';
             position: absolute;
             left: 0;
             color: var(--accent-primary);
             font-size: 0.8rem;
         }
 
+        .legal-note {
+            color: var(--text-tertiary);
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            line-height: 1.4;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         /* Footer */
         .footer {
             border-top: 1px solid var(--border-color);
-            padding: 4rem 2rem 2rem;
+            padding: 3rem 2rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -503,9 +567,9 @@
         }
 
         .footer-logo {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 550;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 500;
             color: var(--text-primary);
             opacity: 0.9;
         }
@@ -518,11 +582,9 @@
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: color var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            font-weight: 450;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .footer-links a:hover {
@@ -531,27 +593,47 @@
 
         .copyright {
             color: var(--text-tertiary);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             margin-top: 3rem;
             text-align: center;
             width: 100%;
             line-height: 1.4;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .copyright a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color var(--transition);
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        .copyright a:hover {
-            color: var(--accent-primary);
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-up {
+            animation: slideUp 0.6s cubic-bezier(0.33, 0.85, 0.45, 0.98) forwards;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
             }
             
             .nav-links {
@@ -562,14 +644,13 @@
                 flex-direction: column;
             }
             
-            .steps::before {
-                left: 19px;
+            .process-step {
+                flex-direction: column;
+                gap: 1rem;
             }
             
-            .step-number {
-                width: 40px;
-                height: 40px;
-                font-size: 0.85rem;
+            .step-number::after {
+                display: none;
             }
             
             .footer-content {
@@ -588,7 +669,7 @@
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             
             .hero p {
@@ -596,41 +677,40 @@
             }
             
             .section-header h2 {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
             
             .navbar {
-                padding: 1rem 1.5rem;
+                padding: 0.75rem 1.5rem;
+            }
+            
+            .hero {
+                padding: 6rem 1.5rem 3rem;
             }
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        /* Terminal-style elements */
+        .terminal-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .terminal-prompt {
+            color: var(--accent-primary);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .animate-in {
-            animation: fadeIn 0.8s ease-out forwards;
+        .terminal-output {
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .animate-up {
-            animation: slideUp 0.8s cubic-bezier(0.33, 0.85, 0.45, 0.98) forwards;
+        .terminal-comment {
+            color: var(--text-tertiary);
+            font-style: italic;
+            margin-left: 1.5rem;
         }
     </style>
 </head>
@@ -638,23 +718,41 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#" class="logo">echono</a>
+            <a href="#" class="logo mono">echono</a>
             <div class="nav-links">
-                <a href="#features">features</a>
-                <a href="#how-it-works">operation</a>
-                <a href="#download">download</a>
+                <a href="#features" class="mono">features</a>
+                <a href="#process" class="mono">process</a>
+                <a href="#download" class="mono">download</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-bg"></div>
         <div class="hero-content animate-up">
-            <h1>Echo VR<br><span class="highlight">anti-cheat</span></h1>
-            <p>Memory integrity monitoring for Echo VR. Runs as a portable background service with minimal overhead and zero intrusive behavior.</p>
+            <h1 class="mono">memory integrity monitor<br>for <span class="accent">Echo VR</span></h1>
+            <p>A minimal background service that continuously verifies game memory integrity. Operates silently with zero performance overhead.</p>
+            
+            <div class="code-block mono" style="margin-bottom: 2rem; max-width: 500px;">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-output">./echono.exe --background</span>
+                </div>
+                <div class="terminal-comment">// starting monitor service...</div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&gt;</span>
+                    <span class="terminal-output">[08:42:15] Echo VR detected</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">&gt;</span>
+                    <span class="terminal-output">[08:42:16] Integrity check: PASS</span>
+                </div>
+            </div>
+
             <div class="hero-buttons">
-                <a href="#download" class="button-primary">download</a>
-                <a href="#how-it-works" class="button-secondary">how it works</a>
+                <a href="#download" class="button-primary mono">download release</a>
+                <a href="#process" class="button-secondary mono">view process</a>
             </div>
         </div>
     </section>
@@ -662,76 +760,76 @@
     <!-- Features Section -->
     <section id="features" class="section">
         <div class="section-header animate-up">
-            <h2>operation</h2>
-            <p>Continuous monitoring with a single purpose: detect integrity violations.</p>
+            <h2 class="mono">core functionality</h2>
+            <p>Precise monitoring focused on essential integrity verification.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card animate-up" style="animation-delay: 0.1s">
-                <div class="feature-icon">🛡️</div>
-                <h3>memory integrity monitoring</h3>
-                <p>Scans game memory for unauthorized modifications and abnormal values indicative of cheating.</p>
+                <div class="feature-icon mono">memory scanning</div>
+                <h3 class="mono">continuous verification</h3>
+                <p>Real-time analysis of game memory structures with specialized heuristics for anomaly detection.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.2s">
-                <div class="feature-icon">⚡</div>
-                <h3>zero overhead operation</h3>
-                <p>Optimized scanning algorithms ensure no measurable impact on game performance or stability.</p>
+                <div class="feature-icon mono">process monitoring</div>
+                <h3 class="mono">auto-detection</h3>
+                <p>Autonomous operation that activates when Echo VR launches and terminates with the process.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.3s">
-                <div class="feature-icon">🔍</div>
-                <h3>auto-detection</h3>
-                <p>Automatically begins monitoring when Echo VR launches and stops when the process terminates.</p>
+                <div class="feature-icon mono">performance</div>
+                <h3 class="mono">zero overhead</h3>
+                <p>Optimized scanning algorithms ensure no measurable impact on game performance or stability.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.4s">
-                <div class="feature-icon">🎮</div>
-                <h3>discord presence</h3>
-                <p>Optional Discord Rich Presence integration shows your integrity status while playing.</p>
+                <div class="feature-icon mono">integration</div>
+                <h3 class="mono">discord presence</h3>
+                <p>Optional Discord Rich Presence integration displays integrity status while playing.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.5s">
-                <div class="feature-icon">📁</div>
-                <h3>portable execution</h3>
-                <p>No installation required. Runs as a standalone executable without administrator privileges.</p>
+                <div class="feature-icon mono">portability</div>
+                <h3 class="mono">standalone executable</h3>
+                <p>No installation required. Runs as a portable binary without system modifications.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.6s">
-                <div class="feature-icon">📊</div>
-                <h3>detailed logging</h3>
-                <p>Optional debug mode provides complete transparency into monitoring activities.</p>
+                <div class="feature-icon mono">transparency</div>
+                <h3 class="mono">detailed logging</h3>
+                <p>Comprehensive logging system provides complete visibility into monitoring activities.</p>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section id="how-it-works" class="section">
+    <!-- Process Section -->
+    <section id="process" class="section">
         <div class="section-header animate-up">
-            <h2>process flow</h2>
-            <p>Minimal, efficient, and deterministic detection methodology.</p>
+            <h2 class="mono">monitoring process</h2>
+            <p>Deterministic verification methodology.</p>
         </div>
-        <div class="steps">
-            <div class="step animate-up" style="animation-delay: 0.1s">
-                <div class="step-number">01</div>
+        <div class="process">
+            <div class="process-step animate-up" style="animation-delay: 0.1s">
+                <div class="step-number mono">01</div>
                 <div class="step-content">
-                    <h3>process detection</h3>
-                    <p>Monitors system processes for Echo VR execution. Begins operation only when the game is active.</p>
+                    <h3 class="mono">process detection</h3>
+                    <p>Continuous system monitoring for Echo VR process execution using <span class="code-inline mono">CreateToolhelp32Snapshot</span>.</p>
                 </div>
             </div>
-            <div class="step animate-up" style="animation-delay: 0.2s">
-                <div class="step-number">02</div>
+            <div class="process-step animate-up" style="animation-delay: 0.2s">
+                <div class="step-number mono">02</div>
                 <div class="step-content">
-                    <h3>memory analysis</h3>
-                    <p>Scans critical memory regions for unauthorized modifications and abnormal value patterns.</p>
+                    <h3 class="mono">memory analysis</h3>
+                    <p>Direct memory access via <span class="code-inline mono">ReadProcessMemory</span> with validation heuristics for unauthorized modifications.</p>
                 </div>
             </div>
-            <div class="step animate-up" style="animation-delay: 0.3s">
-                <div class="step-number">03</div>
+            <div class="process-step animate-up" style="animation-delay: 0.3s">
+                <div class="step-number mono">03</div>
                 <div class="step-content">
-                    <h3>integrity validation</h3>
-                    <p>Validates game state through multiple integrity checks, including wrist angle verification.</p>
+                    <h3 class="mono">integrity validation</h3>
+                    <p>Multi-layered verification including wrist angle bounds checking and memory region validation.</p>
                 </div>
             </div>
-            <div class="step animate-up" style="animation-delay: 0.4s">
-                <div class="step-number">04</div>
+            <div class="process-step animate-up" style="animation-delay: 0.4s">
+                <div class="step-number mono">04</div>
                 <div class="step-content">
-                    <h3>status reporting</h3>
-                    <p>Provides real-time status updates through system tray notifications and Discord presence.</p>
+                    <h3 class="mono">status reporting</h3>
+                    <p>Real-time status updates through system tray notifications and optional Discord presence integration.</p>
                 </div>
             </div>
         </div>
@@ -740,39 +838,42 @@
     <!-- Download Section -->
     <section id="download" class="download-section">
         <div class="download-info animate-up">
-            <h2>download</h2>
-            <p>Current version: 1.0.0. Portable executable, no installation required.</p>
+            <h2 class="mono">download</h2>
+            <p>Current version: 1.0.0 · Portable Windows executable</p>
         </div>
-        <a href="#" class="button-primary" style="font-size: 0.95rem; padding: 1rem 2.5rem;">download echono.exe</a>
         
-        <div class="system-requirements animate-up" style="animation-delay: 0.2s">
-            <h3>requirements</h3>
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <a href="#" class="button-primary mono" style="font-size: 0.9rem; padding: 1rem 2.25rem;">download echono.exe</a>
+        </div>
+        
+        <div class="requirements animate-up" style="animation-delay: 0.2s">
+            <h3 class="mono">requirements</h3>
             <ul>
-                <li>Windows 10 or newer (64-bit required)</li>
-                <li>Echo VR installed via Oculus/Meta PC application</li>
-                <li>4GB system RAM minimum</li>
+                <li>Windows 10 or newer (64-bit)</li>
+                <li>Echo VR via Oculus/Meta PC application</li>
+                <li>4GB system memory minimum</li>
                 <li>50MB available storage</li>
-                <li>No administrator privileges required</li>
+                <li>No installation or admin required</li>
             </ul>
         </div>
         
-        <p style="color: var(--text-tertiary); margin-top: 2rem; font-size: 0.85rem; line-height: 1.4;">
-            echono is closed-source proprietary software. Reverse engineering or unauthorized distribution is prohibited.
-        </p>
+        <div class="legal-note mono">
+            echono is proprietary software. Reverse engineering, modification, or unauthorized distribution is prohibited.
+        </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-logo">echono</div>
+            <div class="footer-logo mono">echono</div>
             <div class="footer-links">
-                <a href="mailto:support@echono.dev">support</a>
-                <a href="#privacy">privacy</a>
-                <a href="#terms">terms</a>
+                <a href="mailto:support@echono.dev" class="mono">contact</a>
+                <a href="#privacy" class="mono">privacy</a>
+                <a href="#terms" class="mono">terms</a>
             </div>
         </div>
-        <div class="copyright">
-            © 2024 echono. Not affiliated with or endorsed by Ready At Dawn Studios or Meta Platforms, Inc.<br>
+        <div class="copyright mono">
+            © 2024 echono · Not affiliated with or endorsed by Ready At Dawn Studios or Meta Platforms, Inc.<br>
             Echo VR is a registered trademark of Ready At Dawn Studios.
         </div>
     </footer>
@@ -817,14 +918,32 @@
                 });
             });
 
-            // Add subtle hover effect to feature cards
+            // Add interactive hover effects
             document.querySelectorAll('.feature-card').forEach(card => {
                 card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-4px)';
+                    card.style.transform = 'translateY(-2px)';
                 });
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
                 });
+            });
+
+            // Terminal typing effect for fun
+            const terminalLines = document.querySelectorAll('.terminal-line .terminal-output');
+            terminalLines.forEach((line, index) => {
+                const originalText = line.textContent;
+                line.textContent = '';
+                setTimeout(() => {
+                    let i = 0;
+                    const typeWriter = () => {
+                        if (i < originalText.length) {
+                            line.textContent += originalText.charAt(i);
+                            i++;
+                            setTimeout(typeWriter, 30);
+                        }
+                    };
+                    typeWriter();
+                }, 500 + (index * 200));
             });
         });
     </script>
