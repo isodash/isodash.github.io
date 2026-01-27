@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>echono · integrity monitor for Echo VR</title>
+    <title>echono · anti-cheat for Echo VR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;350;400;450;500;550;600;650&family=Inter:wght@300;350;400;450;500;550;600;650&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #050609;
-            --bg-secondary: #0d0f13;
-            --bg-tertiary: #14171c;
-            --text-primary: #e8eaed;
+            --bg-primary: #030406;
+            --bg-secondary: #0a0c0f;
+            --bg-tertiary: #111317;
+            --text-primary: #f0f2f5;
             --text-secondary: #8c929d;
             --text-tertiary: #5c626d;
-            --accent-primary: #64d894;
-            --accent-secondary: #5ab4e0;
+            --accent-good: #64d894;
             --accent-warning: #ff5c6c;
-            --border-color: #232730;
-            --border-light: #323640;
-            --glow-primary: rgba(100, 216, 148, 0.1);
-            --glow-secondary: rgba(90, 180, 224, 0.08);
-            --shadow-heavy: rgba(0, 0, 0, 0.7);
+            --accent-neutral: #e8eaed;
+            --border-color: #1a1d24;
+            --border-light: #2a2d34;
+            --glow-good: rgba(100, 216, 148, 0.08);
+            --glow-warning: rgba(255, 92, 108, 0.08);
+            --shadow-heavy: rgba(0, 0, 0, 0.8);
             --transition: 0.3s cubic-bezier(0.33, 0.85, 0.45, 0.98);
         }
 
@@ -38,7 +38,7 @@
         }
 
         ::selection {
-            background: var(--accent-primary);
+            background: var(--accent-good);
             color: var(--bg-primary);
         }
 
@@ -81,10 +81,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(5, 6, 9, 0.88);
+            background: rgba(3, 4, 6, 0.92);
             backdrop-filter: blur(16px) saturate(200%);
             -webkit-backdrop-filter: blur(16px) saturate(200%);
-            border-bottom: 1px solid rgba(35, 39, 48, 0.3);
+            border-bottom: 1px solid rgba(26, 29, 36, 0.3);
             z-index: 1000;
             padding: 1rem 2rem;
             font-family: 'JetBrains Mono', monospace;
@@ -119,7 +119,7 @@
 
         .logo::before {
             content: '>';
-            color: var(--accent-primary);
+            color: var(--accent-good);
             margin-right: 0.4rem;
             opacity: 0.7;
         }
@@ -151,7 +151,7 @@
             right: -0.6rem;
             opacity: 0;
             transition: opacity var(--transition);
-            color: var(--accent-primary);
+            color: var(--accent-good);
         }
 
         .nav-links a:hover::after {
@@ -201,7 +201,7 @@
         }
 
         .hero h1 .accent {
-            color: var(--accent-primary);
+            color: var(--accent-good);
             position: relative;
             font-weight: 550;
         }
@@ -209,7 +209,7 @@
         .hero h1 .accent::before {
             content: '// ';
             opacity: 0.5;
-            color: var(--accent-primary);
+            color: var(--accent-good);
         }
 
         .hero p {
@@ -227,7 +227,7 @@
         }
 
         .button-primary {
-            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            background: var(--accent-good);
             color: var(--bg-primary);
             padding: 0.85rem 1.75rem;
             border-radius: 4px;
@@ -273,41 +273,93 @@
         }
 
         .button-secondary:hover {
-            border-color: var(--accent-primary);
+            border-color: var(--accent-good);
             background: rgba(100, 216, 148, 0.05);
         }
 
-        /* Code Block Styling */
-        .code-block {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            overflow-x: auto;
+        .button-warning {
+            background: var(--accent-warning);
+            color: var(--bg-primary);
+            padding: 0.85rem 1.75rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 550;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            border: none;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.4;
+            letter-spacing: 0.02em;
+            position: relative;
+            overflow: hidden;
         }
 
-        .code-comment {
-            color: var(--text-tertiary);
-            font-style: italic;
+        .button-warning::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
         }
 
-        .code-keyword {
-            color: var(--accent-primary);
+        .button-warning:hover::before {
+            left: 100%;
         }
 
-        .code-string {
-            color: var(--accent-secondary);
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
         }
 
-        .code-number {
-            color: #ff9d5c;
+        .status-good {
+            background: rgba(100, 216, 148, 0.1);
+            color: var(--accent-good);
+            border: 1px solid rgba(100, 216, 148, 0.2);
         }
 
-        /* Features Section */
+        .status-warning {
+            background: rgba(255, 92, 108, 0.1);
+            color: var(--accent-warning);
+            border: 1px solid rgba(255, 92, 108, 0.2);
+        }
+
+        .status-neutral {
+            background: rgba(232, 234, 237, 0.05);
+            color: var(--accent-neutral);
+            border: 1px solid var(--border-color);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.good {
+            background: var(--accent-good);
+            box-shadow: 0 0 8px rgba(100, 216, 148, 0.5);
+        }
+
+        .status-dot.warning {
+            background: var(--accent-warning);
+            box-shadow: 0 0 8px rgba(255, 92, 108, 0.5);
+        }
+
+        .status-dot.neutral {
+            background: var(--accent-neutral);
+            box-shadow: 0 0 8px rgba(232, 234, 237, 0.3);
+        }
+
+        /* Anti-Cheat Features */
         .section {
             padding: 6rem 2rem;
             max-width: 1200px;
@@ -329,7 +381,7 @@
 
         .section-header h2::before {
             content: '// ';
-            color: var(--accent-primary);
+            color: var(--accent-good);
             opacity: 0.5;
         }
 
@@ -363,14 +415,14 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            background: linear-gradient(90deg, transparent, var(--accent-good), transparent);
             transform: scaleX(0);
             transition: transform var(--transition);
         }
 
         .feature-card:hover {
             transform: translateY(-2px);
-            border-color: var(--accent-primary);
+            border-color: var(--accent-good);
         }
 
         .feature-card:hover::before {
@@ -381,7 +433,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 1rem;
             margin-bottom: 1.25rem;
-            color: var(--accent-primary);
+            color: var(--accent-good);
             opacity: 0.9;
             letter-spacing: -0.01em;
         }
@@ -407,7 +459,48 @@
             line-height: 1.5;
         }
 
-        /* How It Works */
+        /* Detection Methods */
+        .detection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .detection-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detection-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .detection-status {
+            font-size: 0.75rem;
+        }
+
+        .detection-desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Anti-Cheat Process */
         .process {
             display: flex;
             flex-direction: column;
@@ -424,7 +517,7 @@
 
         .step-number {
             background: var(--bg-primary);
-            color: var(--accent-primary);
+            color: var(--accent-good);
             width: 42px;
             height: 42px;
             border-radius: 4px;
@@ -462,16 +555,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.5;
-        }
-
-        .step-content .code-inline {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            background: var(--bg-tertiary);
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            border: 1px solid var(--border-color);
-            color: var(--accent-secondary);
         }
 
         /* Download Section */
@@ -514,7 +597,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
             margin-bottom: 1.25rem;
-            color: var(--accent-primary);
+            color: var(--accent-good);
             font-weight: 500;
         }
 
@@ -534,7 +617,7 @@
             content: '•';
             position: absolute;
             left: 0;
-            color: var(--accent-primary);
+            color: var(--accent-good);
             font-size: 0.8rem;
         }
 
@@ -588,7 +671,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--accent-primary);
+            color: var(--accent-good);
         }
 
         .copyright {
@@ -622,12 +705,25 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         .animate-in {
             animation: fadeIn 0.8s ease-out forwards;
         }
 
         .animate-up {
             animation: slideUp 0.6s cubic-bezier(0.33, 0.85, 0.45, 0.98) forwards;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Responsive Design */
@@ -658,7 +754,7 @@
                 text-align: center;
             }
             
-            .features-grid {
+            .features-grid, .detection-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -698,7 +794,7 @@
         }
 
         .terminal-prompt {
-            color: var(--accent-primary);
+            color: var(--accent-good);
             font-family: 'JetBrains Mono', monospace;
         }
 
@@ -712,6 +808,27 @@
             font-style: italic;
             margin-left: 1.5rem;
         }
+
+        /* Anti-Cheat Specific */
+        .protection-level {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 0.5rem;
+        }
+
+        .discord-rpc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #5865F2;
+        }
     </style>
 </head>
 <body>
@@ -721,7 +838,7 @@
             <a href="#" class="logo mono">echono</a>
             <div class="nav-links">
                 <a href="#features" class="mono">features</a>
-                <a href="#process" class="mono">process</a>
+                <a href="#detection" class="mono">detection</a>
                 <a href="#download" class="mono">download</a>
             </div>
         </div>
@@ -731,28 +848,22 @@
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content animate-up">
-            <h1 class="mono">memory integrity monitor<br>for <span class="accent">Echo VR</span></h1>
-            <p>A minimal background service that continuously verifies game memory integrity. Operates silently with zero performance overhead.</p>
+            <h1 class="mono">anti-cheat for <span class="accent">Echo VR</span></h1>
+            <p>A silent background service that continuously monitors game integrity. Operates with zero performance impact and requires no installation.</p>
             
-            <div class="code-block mono" style="margin-bottom: 2rem; max-width: 500px;">
-                <div class="terminal-line">
-                    <span class="terminal-prompt">$</span>
-                    <span class="terminal-output">./echono.exe --background</span>
-                </div>
-                <div class="terminal-comment">// starting monitor service...</div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">&gt;</span>
-                    <span class="terminal-output">[08:42:15] Echo VR detected</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">&gt;</span>
-                    <span class="terminal-output">[08:42:16] Integrity check: PASS</span>
-                </div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-output">echono.exe --monitor</span>
             </div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">&gt;</span>
+                <span class="terminal-output"><span class="status-indicator status-good"><span class="status-dot good"></span> system secure</span></span>
+            </div>
+            <div class="terminal-comment">// starts automatically with Echo VR</div>
 
-            <div class="hero-buttons">
-                <a href="#download" class="button-primary mono">download release</a>
-                <a href="#process" class="button-secondary mono">view process</a>
+            <div class="hero-buttons" style="margin-top: 2.5rem;">
+                <a href="#download" class="button-primary mono">download</a>
+                <a href="#detection" class="button-secondary mono">detection methods</a>
             </div>
         </div>
     </section>
@@ -760,76 +871,120 @@
     <!-- Features Section -->
     <section id="features" class="section">
         <div class="section-header animate-up">
-            <h2 class="mono">core functionality</h2>
-            <p>Precise monitoring focused on essential integrity verification.</p>
+            <h2 class="mono">features</h2>
+            <p>Precise anti-cheat monitoring designed for competitive integrity.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card animate-up" style="animation-delay: 0.1s">
-                <div class="feature-icon mono">memory scanning</div>
-                <h3 class="mono">continuous verification</h3>
-                <p>Real-time analysis of game memory structures with specialized heuristics for anomaly detection.</p>
+                <div class="feature-icon mono">background monitoring</div>
+                <h3 class="mono">silent operation</h3>
+                <p>Runs as a background service with zero visible interface unless requested. No distractions during gameplay.</p>
+                <div class="protection-level">requires no user interaction</div>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.2s">
-                <div class="feature-icon mono">process monitoring</div>
-                <h3 class="mono">auto-detection</h3>
-                <p>Autonomous operation that activates when Echo VR launches and terminates with the process.</p>
+                <div class="feature-icon mono">process detection</div>
+                <h3 class="mono">automatic activation</h3>
+                <p>Activates automatically when Echo VR launches and terminates when the game closes. No manual start required.</p>
+                <div class="protection-level">system-wide process monitoring</div>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.3s">
                 <div class="feature-icon mono">performance</div>
                 <h3 class="mono">zero overhead</h3>
-                <p>Optimized scanning algorithms ensure no measurable impact on game performance or stability.</p>
+                <p>Optimized monitoring algorithms ensure no measurable impact on game performance or system stability.</p>
+                <div class="protection-level">&lt;1% CPU usage</div>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.4s">
                 <div class="feature-icon mono">integration</div>
                 <h3 class="mono">discord presence</h3>
-                <p>Optional Discord Rich Presence integration displays integrity status while playing.</p>
+                <p><span class="discord-rpc">Discord RPC</span> integration shows your integrity status to friends while playing.</p>
+                <div class="protection-level">optional integration</div>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.5s">
                 <div class="feature-icon mono">portability</div>
                 <h3 class="mono">standalone executable</h3>
-                <p>No installation required. Runs as a portable binary without system modifications.</p>
+                <p>No installation required. Single portable executable with no system modifications or registry changes.</p>
+                <div class="protection-level">no admin privileges required</div>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.6s">
                 <div class="feature-icon mono">transparency</div>
                 <h3 class="mono">detailed logging</h3>
-                <p>Comprehensive logging system provides complete visibility into monitoring activities.</p>
+                <p>Comprehensive logging system provides complete visibility into monitoring activities and integrity status.</p>
+                <div class="protection-level">debug mode available</div>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
-    <section id="process" class="section">
+    <!-- Detection Methods -->
+    <section id="detection" class="section" style="background: var(--bg-tertiary); border-radius: 8px; margin: 2rem auto;">
         <div class="section-header animate-up">
-            <h2 class="mono">monitoring process</h2>
-            <p>Deterministic verification methodology.</p>
+            <h2 class="mono">detection methods</h2>
+            <p>Multi-layered detection system for comprehensive protection.</p>
+        </div>
+        <div class="detection-grid">
+            <div class="detection-card animate-up" style="animation-delay: 0.1s">
+                <div class="detection-header">
+                    <div class="detection-name mono">memory integrity</div>
+                    <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
+                </div>
+                <div class="detection-desc">Continuous validation of game memory structures to detect unauthorized modifications.</div>
+            </div>
+            <div class="detection-card animate-up" style="animation-delay: 0.2s">
+                <div class="detection-header">
+                    <div class="detection-name mono">pattern detection</div>
+                    <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
+                </div>
+                <div class="detection-desc">Heuristic analysis to identify known cheat signatures and behavioral patterns.</div>
+            </div>
+            <div class="detection-card animate-up" style="animation-delay: 0.3s">
+                <div class="detection-header">
+                    <div class="detection-name mono">anomaly detection</div>
+                    <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
+                </div>
+                <div class="detection-desc">Real-time monitoring for statistical anomalies in gameplay metrics and inputs.</div>
+            </div>
+            <div class="detection-card animate-up" style="animation-delay: 0.4s">
+                <div class="detection-header">
+                    <div class="detection-name mono">process validation</div>
+                    <span class="status-indicator status-neutral"><span class="status-dot neutral"></span> monitoring</span>
+                </div>
+                <div class="detection-desc">Validation of running processes and modules to detect external interference.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anti-Cheat Process -->
+    <section class="section">
+        <div class="section-header animate-up">
+            <h2 class="mono">anti-cheat process</h2>
+            <p>Deterministic verification methodology for competitive integrity.</p>
         </div>
         <div class="process">
             <div class="process-step animate-up" style="animation-delay: 0.1s">
                 <div class="step-number mono">01</div>
                 <div class="step-content">
-                    <h3 class="mono">process detection</h3>
-                    <p>Continuous system monitoring for Echo VR process execution using <span class="code-inline mono">CreateToolhelp32Snapshot</span>.</p>
+                    <h3 class="mono">detection</h3>
+                    <p>Continuous system monitoring for Echo VR process execution and game session initialization.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.2s">
                 <div class="step-number mono">02</div>
                 <div class="step-content">
-                    <h3 class="mono">memory analysis</h3>
-                    <p>Direct memory access via <span class="code-inline mono">ReadProcessMemory</span> with validation heuristics for unauthorized modifications.</p>
+                    <h3 class="mono">analysis</h3>
+                    <p>Multi-layered scanning of critical game structures using proprietary detection algorithms.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.3s">
                 <div class="step-number mono">03</div>
                 <div class="step-content">
-                    <h3 class="mono">integrity validation</h3>
-                    <p>Multi-layered verification including wrist angle bounds checking and memory region validation.</p>
+                    <h3 class="mono">validation</h3>
+                    <p>Continuous integrity validation throughout gameplay sessions with real-time anomaly detection.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.4s">
                 <div class="step-number mono">04</div>
                 <div class="step-content">
-                    <h3 class="mono">status reporting</h3>
-                    <p>Real-time status updates through system tray notifications and optional Discord presence integration.</p>
+                    <h3 class="mono">reporting</h3>
+                    <p>Status monitoring through system indicators and optional Discord Rich Presence integration.</p>
                 </div>
             </div>
         </div>
@@ -853,12 +1008,12 @@
                 <li>Echo VR via Oculus/Meta PC application</li>
                 <li>4GB system memory minimum</li>
                 <li>50MB available storage</li>
-                <li>No installation or admin required</li>
+                <li>No installation or administrator privileges required</li>
             </ul>
         </div>
         
         <div class="legal-note mono">
-            echono is proprietary software. Reverse engineering, modification, or unauthorized distribution is prohibited.
+            echono is proprietary anti-cheat software. Reverse engineering, modification, or unauthorized distribution is strictly prohibited.
         </div>
     </section>
 
@@ -867,7 +1022,7 @@
         <div class="footer-content">
             <div class="footer-logo mono">echono</div>
             <div class="footer-links">
-                <a href="mailto:support@echono.dev" class="mono">contact</a>
+                <a href="mailto:contact@echono.dev" class="mono">contact</a>
                 <a href="#privacy" class="mono">privacy</a>
                 <a href="#terms" class="mono">terms</a>
             </div>
@@ -918,6 +1073,16 @@
                 });
             });
 
+            // Status indicator animation
+            const statusDots = document.querySelectorAll('.status-dot');
+            statusDots.forEach(dot => {
+                if (dot.classList.contains('good')) {
+                    dot.style.animation = 'pulse 3s infinite';
+                } else if (dot.classList.contains('warning')) {
+                    dot.style.animation = 'pulse 1.5s infinite';
+                }
+            });
+
             // Add interactive hover effects
             document.querySelectorAll('.feature-card').forEach(card => {
                 card.addEventListener('mouseenter', () => {
@@ -926,24 +1091,6 @@
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
                 });
-            });
-
-            // Terminal typing effect for fun
-            const terminalLines = document.querySelectorAll('.terminal-line .terminal-output');
-            terminalLines.forEach((line, index) => {
-                const originalText = line.textContent;
-                line.textContent = '';
-                setTimeout(() => {
-                    let i = 0;
-                    const typeWriter = () => {
-                        if (i < originalText.length) {
-                            line.textContent += originalText.charAt(i);
-                            i++;
-                            setTimeout(typeWriter, 30);
-                        }
-                    };
-                    typeWriter();
-                }, 500 + (index * 200));
             });
         });
     </script>
