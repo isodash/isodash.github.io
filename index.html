@@ -6,24 +6,24 @@
     <title>echono · anti-cheat for Echo VR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;350;400;450;500;550;600;650&family=Inter:wght@300;350;400;450;500;550;600;650&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;350;400;450;500&family=Inter:wght@300;350;400;450;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #030406;
-            --bg-secondary: #0a0c0f;
-            --bg-tertiary: #111317;
-            --text-primary: #f0f2f5;
-            --text-secondary: #8c929d;
-            --text-tertiary: #5c626d;
-            --accent-good: #64d894;
-            --accent-warning: #ff5c6c;
-            --accent-neutral: #e8eaed;
-            --border-color: #1a1d24;
-            --border-light: #2a2d34;
-            --glow-good: rgba(100, 216, 148, 0.08);
-            --glow-warning: rgba(255, 92, 108, 0.08);
-            --shadow-heavy: rgba(0, 0, 0, 0.8);
-            --transition: 0.3s cubic-bezier(0.33, 0.85, 0.45, 0.98);
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #101010;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #aaaaaa;
+            --text-tertiary: #666666;
+            --accent-good: #2ecc71;
+            --accent-warning: #e74c3c;
+            --accent-neutral: #ffffff;
+            --border-color: #222222;
+            --border-light: #333333;
+            --glow-good: rgba(46, 204, 113, 0.05);
+            --glow-warning: rgba(231, 76, 60, 0.05);
+            --shadow-heavy: rgba(0, 0, 0, 0.9);
+            --transition: 0.35s cubic-bezier(0.33, 0.85, 0.45, 0.98);
         }
 
         * {
@@ -60,15 +60,19 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.5;
-            letter-spacing: -0.01em;
+            line-height: 1.6;
             font-weight: 400;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            letter-spacing: -0.01em;
         }
 
         .mono {
@@ -76,18 +80,21 @@
             letter-spacing: -0.02em;
         }
 
+        .sans {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
         /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(3, 4, 6, 0.92);
-            backdrop-filter: blur(16px) saturate(200%);
-            -webkit-backdrop-filter: blur(16px) saturate(200%);
-            border-bottom: 1px solid rgba(26, 29, 36, 0.3);
+            background: rgba(10, 10, 10, 0.94);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(34, 34, 34, 0.3);
             z-index: 1000;
-            padding: 1rem 2rem;
-            font-family: 'JetBrains Mono', monospace;
+            padding: 1.2rem 2.5rem;
         }
 
         .nav-content {
@@ -99,46 +106,36 @@
         }
 
         .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.3rem;
-            font-weight: 450;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
             letter-spacing: -0.025em;
             color: var(--text-primary);
             text-decoration: none;
-            opacity: 0.9;
-            transition: all var(--transition);
+            opacity: 0.95;
+            transition: opacity var(--transition);
             position: relative;
-            padding: 0.25rem 0.5rem;
-            border: 1px solid transparent;
         }
 
         .logo:hover {
             opacity: 1;
-            border-color: var(--border-light);
-        }
-
-        .logo::before {
-            content: '>';
-            color: var(--accent-good);
-            margin-right: 0.4rem;
-            opacity: 0.7;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 3rem;
             align-items: center;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 450;
-            font-size: 0.85rem;
+            font-weight: 400;
+            font-size: 0.95rem;
             transition: all var(--transition);
             position: relative;
-            letter-spacing: 0.02em;
-            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.01em;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
         }
 
         .nav-links a:hover {
@@ -146,16 +143,18 @@
         }
 
         .nav-links a::after {
-            content: ';';
+            content: '';
             position: absolute;
-            right: -0.6rem;
-            opacity: 0;
-            transition: opacity var(--transition);
-            color: var(--accent-good);
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-good);
+            transition: width 0.4s ease-out;
         }
 
         .nav-links a:hover::after {
-            opacity: 0.7;
+            width: 100%;
         }
 
         /* Hero Section */
@@ -163,80 +162,61 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 8rem 2rem 4rem;
+            padding: 8rem 2.5rem 4rem;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            opacity: 0.03;
-            background-image: 
-                linear-gradient(90deg, transparent 24px, var(--border-color) 25px, transparent 26px, transparent 49px),
-                linear-gradient(0deg, transparent 24px, var(--border-color) 25px, transparent 26px, transparent 49px);
-            background-size: 50px 50px;
-        }
-
         .hero-content {
-            max-width: 720px;
+            max-width: 680px;
             position: relative;
             z-index: 1;
         }
 
         .hero h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 3.25rem;
-            font-weight: 450;
-            margin-bottom: 1.25rem;
-            line-height: 1.05;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
             letter-spacing: -0.03em;
             color: var(--text-primary);
         }
 
         .hero h1 .accent {
             color: var(--accent-good);
-            position: relative;
-            font-weight: 550;
-        }
-
-        .hero h1 .accent::before {
-            content: '// ';
-            opacity: 0.5;
-            color: var(--accent-good);
+            font-weight: 700;
+            font-style: italic;
         }
 
         .hero p {
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
-            max-width: 540px;
-            line-height: 1.6;
+            max-width: 560px;
+            line-height: 1.7;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.25rem;
             flex-wrap: wrap;
+            margin-top: 3rem;
         }
 
         .button-primary {
             background: var(--accent-good);
             color: var(--bg-primary);
-            padding: 0.85rem 1.75rem;
-            border-radius: 4px;
+            padding: 1rem 2.25rem;
+            border-radius: 3px;
             text-decoration: none;
-            font-weight: 550;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: all var(--transition);
             border: none;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
             letter-spacing: 0.02em;
             position: relative;
             overflow: hidden;
@@ -249,8 +229,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.7s;
         }
 
         .button-primary:hover::before {
@@ -260,21 +240,21 @@
         .button-secondary {
             background: transparent;
             color: var(--text-primary);
-            padding: 0.85rem 1.75rem;
-            border-radius: 4px;
+            padding: 1rem 2.25rem;
+            border-radius: 3px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: all var(--transition);
             border: 1px solid var(--border-light);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
             letter-spacing: 0.02em;
             position: relative;
         }
 
         .button-secondary:hover {
             border-color: var(--accent-good);
-            background: rgba(100, 216, 148, 0.05);
+            background: rgba(46, 204, 113, 0.05);
         }
 
         .button-warning {
@@ -293,116 +273,99 @@
             overflow: hidden;
         }
 
-        .button-warning::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .button-warning:hover::before {
-            left: 100%;
-        }
-
         /* Status Indicators */
         .status-indicator {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 3px;
+            gap: 0.75rem;
+            padding: 0.35rem 1rem;
+            border-radius: 2px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .status-good {
-            background: rgba(100, 216, 148, 0.1);
+            background: rgba(46, 204, 113, 0.08);
             color: var(--accent-good);
-            border: 1px solid rgba(100, 216, 148, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.15);
         }
 
         .status-warning {
-            background: rgba(255, 92, 108, 0.1);
+            background: rgba(231, 76, 60, 0.08);
             color: var(--accent-warning);
-            border: 1px solid rgba(255, 92, 108, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.15);
         }
 
         .status-neutral {
-            background: rgba(232, 234, 237, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             color: var(--accent-neutral);
             border: 1px solid var(--border-color);
         }
 
         .status-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
         }
 
         .status-dot.good {
             background: var(--accent-good);
-            box-shadow: 0 0 8px rgba(100, 216, 148, 0.5);
+            box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);
         }
 
         .status-dot.warning {
             background: var(--accent-warning);
-            box-shadow: 0 0 8px rgba(255, 92, 108, 0.5);
+            box-shadow: 0 0 12px rgba(231, 76, 60, 0.4);
         }
 
         .status-dot.neutral {
             background: var(--accent-neutral);
-            box-shadow: 0 0 8px rgba(232, 234, 237, 0.3);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
-        /* Anti-Cheat Features */
+        /* Section Styling */
         .section {
-            padding: 6rem 2rem;
+            padding: 7rem 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-header {
-            margin-bottom: 4.5rem;
+            margin-bottom: 5rem;
+            text-align: center;
         }
 
         .section-header h2 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
             letter-spacing: -0.02em;
             color: var(--text-primary);
         }
 
-        .section-header h2::before {
-            content: '// ';
-            color: var(--accent-good);
-            opacity: 0.5;
-        }
-
         .section-header p {
             color: var(--text-secondary);
-            font-size: 1rem;
-            max-width: 500px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
             margin-top: 3rem;
         }
 
         .feature-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 2rem;
+            border-radius: 3px;
+            padding: 2.5rem;
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -417,11 +380,11 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--accent-good), transparent);
             transform: scaleX(0);
-            transition: transform var(--transition);
+            transition: transform 0.5s ease-out;
         }
 
         .feature-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             border-color: var(--accent-good);
         }
 
@@ -431,50 +394,51 @@
 
         .feature-icon {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            margin-bottom: 1.25rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
             color: var(--accent-good);
             opacity: 0.9;
             letter-spacing: -0.01em;
         }
 
-        .feature-icon::before {
-            content: '>';
-            margin-right: 0.5rem;
-            opacity: 0.5;
-        }
-
         .feature-card h3 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
             letter-spacing: -0.01em;
             color: var(--text-primary);
         }
 
         .feature-card p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* Detection Methods */
+        .detection-section {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            padding: 5rem 2.5rem;
+            margin: 4rem 0;
+        }
+
         .detection-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin-top: 3rem;
         }
 
         .detection-card {
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 1.5rem;
+            border-radius: 3px;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .detection-header {
@@ -485,120 +449,124 @@
 
         .detection-name {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-primary);
             font-weight: 500;
         }
 
         .detection-status {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
         .detection-desc {
             color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
         }
 
-        /* Anti-Cheat Process */
-        .process {
+        /* Process Flow */
+        .process-flow {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
-            max-width: 720px;
+            gap: 4rem;
+            max-width: 800px;
             margin: 0 auto;
+            position: relative;
+        }
+
+        .process-flow::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, var(--border-light), transparent);
         }
 
         .process-step {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             align-items: flex-start;
+            position: relative;
         }
 
         .step-number {
             background: var(--bg-primary);
             color: var(--accent-good);
-            width: 42px;
-            height: 42px;
-            border-radius: 4px;
+            width: 60px;
+            height: 60px;
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
             flex-shrink: 0;
             border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .step-number::after {
-            content: '→';
-            position: absolute;
-            right: -1.2rem;
-            color: var(--border-light);
-        }
-
-        .process-step:last-child .step-number::after {
-            display: none;
+            z-index: 1;
         }
 
         .step-content h3 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
             letter-spacing: -0.01em;
         }
 
         .step-content p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* Download Section */
         .download-section {
-            padding: 6rem 2rem;
+            padding: 7rem 2.5rem;
             max-width: 1200px;
             margin: 4rem auto;
             position: relative;
             border-top: 1px solid var(--border-color);
+            text-align: center;
         }
 
         .download-info {
-            max-width: 640px;
-            margin: 0 auto 3rem;
+            max-width: 680px;
+            margin: 0 auto 4rem;
         }
 
         .download-info h2 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
             letter-spacing: -0.02em;
         }
 
         .download-info p {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .requirements {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 2rem;
-            max-width: 500px;
-            margin: 3rem auto;
+            border-radius: 3px;
+            padding: 2.5rem;
+            max-width: 560px;
+            margin: 4rem auto;
+            text-align: left;
         }
 
         .requirements h3 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            margin-bottom: 1.25rem;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
             color: var(--accent-good);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .requirements ul {
@@ -607,27 +575,27 @@
         }
 
         .requirements li {
-            margin-bottom: 0.75rem;
-            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
             position: relative;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .requirements li::before {
-            content: '•';
+            content: '—';
             position: absolute;
             left: 0;
             color: var(--accent-good);
-            font-size: 0.8rem;
         }
 
         .legal-note {
             color: var(--text-tertiary);
-            font-size: 0.8rem;
-            margin-top: 2rem;
-            line-height: 1.4;
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            line-height: 1.5;
             text-align: center;
-            max-width: 600px;
+            max-width: 680px;
             margin-left: auto;
             margin-right: auto;
             font-family: 'JetBrains Mono', monospace;
@@ -636,7 +604,7 @@
         /* Footer */
         .footer {
             border-top: 1px solid var(--border-color);
-            padding: 3rem 2rem 2rem;
+            padding: 4rem 2.5rem 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -650,24 +618,24 @@
         }
 
         .footer-logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--text-primary);
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             transition: color var(--transition);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Crimson Pro', 'Times New Roman', serif;
         }
 
         .footer-links a:hover {
@@ -676,11 +644,11 @@
 
         .copyright {
             color: var(--text-tertiary);
-            font-size: 0.75rem;
-            margin-top: 3rem;
+            font-size: 0.8rem;
+            margin-top: 4rem;
             text-align: center;
             width: 100%;
-            line-height: 1.4;
+            line-height: 1.5;
             font-family: 'JetBrains Mono', monospace;
         }
 
@@ -697,7 +665,7 @@
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -715,18 +683,38 @@
         }
 
         .animate-in {
-            animation: fadeIn 0.8s ease-out forwards;
+            animation: fadeIn 1s ease-out forwards;
         }
 
         .animate-up {
-            animation: slideUp 0.6s cubic-bezier(0.33, 0.85, 0.45, 0.98) forwards;
+            animation: slideUp 0.7s cubic-bezier(0.33, 0.85, 0.45, 0.98) forwards;
         }
 
         .pulse {
-            animation: pulse 2s infinite;
+            animation: pulse 2.5s infinite;
         }
 
         /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .process-flow::before {
+                left: 25px;
+            }
+            
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.1rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.25rem;
@@ -742,10 +730,10 @@
             
             .process-step {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
-            .step-number::after {
+            .process-flow::before {
                 display: none;
             }
             
@@ -759,25 +747,25 @@
             }
             
             .section {
-                padding: 4rem 1.5rem;
+                padding: 5rem 1.5rem;
+            }
+            
+            .navbar {
+                padding: 1rem 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 1.75rem;
+                font-size: 2rem;
             }
             
             .hero p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
             .section-header h2 {
-                font-size: 1.5rem;
-            }
-            
-            .navbar {
-                padding: 0.75rem 1.5rem;
+                font-size: 1.75rem;
             }
             
             .hero {
@@ -785,47 +773,42 @@
             }
         }
 
-        /* Terminal-style elements */
-        .terminal-line {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .terminal-prompt {
-            color: var(--accent-good);
+        /* Code Elements */
+        .code-snippet {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 2rem;
+            margin: 2rem 0;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
         }
 
-        .terminal-output {
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .terminal-comment {
+        .code-comment {
             color: var(--text-tertiary);
             font-style: italic;
-            margin-left: 1.5rem;
         }
 
-        /* Anti-Cheat Specific */
-        .protection-level {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            font-family: 'JetBrains Mono', monospace;
-            margin-top: 0.5rem;
+        .code-good {
+            color: var(--accent-good);
         }
 
+        .code-warning {
+            color: var(--accent-warning);
+        }
+
+        /* Discord RPC */
         .discord-rpc {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            background: rgba(88, 101, 242, 0.1);
-            border: 1px solid rgba(88, 101, 242, 0.2);
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(88, 101, 242, 0.08);
+            border: 1px solid rgba(88, 101, 242, 0.15);
             border-radius: 3px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-family: 'JetBrains Mono', monospace;
             color: #5865F2;
         }
@@ -835,35 +818,31 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#" class="logo mono">echono</a>
+            <a href="#" class="logo serif">echono</a>
             <div class="nav-links">
-                <a href="#features" class="mono">features</a>
-                <a href="#detection" class="mono">detection</a>
-                <a href="#download" class="mono">download</a>
+                <a href="#features" class="serif">Features</a>
+                <a href="#detection" class="serif">Detection</a>
+                <a href="#download" class="serif">Download</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-bg"></div>
         <div class="hero-content animate-up">
-            <h1 class="mono">anti-cheat for <span class="accent">Echo VR</span></h1>
-            <p>A silent background service that continuously monitors game integrity. Operates with zero performance impact and requires no installation.</p>
+            <h1 class="serif">Anti-cheat for <span class="accent">Echo VR</span></h1>
+            <p class="serif">A refined background service that ensures competitive integrity through continuous, unobtrusive monitoring.</p>
             
-            <div class="terminal-line">
-                <span class="terminal-prompt">$</span>
-                <span class="terminal-output">echono.exe --monitor</span>
+            <div class="code-snippet mono">
+                <span class="code-good">$</span> echono.exe --monitor<br>
+                <span class="code-comment">// starting monitoring service...</span><br>
+                <span class="code-good">></span> <span class="status-indicator status-good"><span class="status-dot good"></span> system integrity verified</span><br>
+                <span class="code-comment">// Echo VR detected - monitoring active</span>
             </div>
-            <div class="terminal-line">
-                <span class="terminal-prompt">&gt;</span>
-                <span class="terminal-output"><span class="status-indicator status-good"><span class="status-dot good"></span> system secure</span></span>
-            </div>
-            <div class="terminal-comment">// starts automatically with Echo VR</div>
 
-            <div class="hero-buttons" style="margin-top: 2.5rem;">
-                <a href="#download" class="button-primary mono">download</a>
-                <a href="#detection" class="button-secondary mono">detection methods</a>
+            <div class="hero-buttons">
+                <a href="https://github.com/isodash/echono" class="button-primary serif">Download Release</a>
+                <a href="#features" class="button-secondary serif">View Features</a>
             </div>
         </div>
     </section>
@@ -871,120 +850,114 @@
     <!-- Features Section -->
     <section id="features" class="section">
         <div class="section-header animate-up">
-            <h2 class="mono">features</h2>
-            <p>Precise anti-cheat monitoring designed for competitive integrity.</p>
+            <h2 class="serif">Features</h2>
+            <p class="serif">Designed for elegance and efficiency, echono provides comprehensive protection without compromise.</p>
         </div>
         <div class="features-grid">
             <div class="feature-card animate-up" style="animation-delay: 0.1s">
-                <div class="feature-icon mono">background monitoring</div>
-                <h3 class="mono">silent operation</h3>
-                <p>Runs as a background service with zero visible interface unless requested. No distractions during gameplay.</p>
-                <div class="protection-level">requires no user interaction</div>
+                <div class="feature-icon mono">background operation</div>
+                <h3 class="serif">Silent Monitoring</h3>
+                <p class="serif">Operates entirely in the background with no visible interface during gameplay, ensuring zero distraction while providing continuous protection.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.2s">
-                <div class="feature-icon mono">process detection</div>
-                <h3 class="mono">automatic activation</h3>
-                <p>Activates automatically when Echo VR launches and terminates when the game closes. No manual start required.</p>
-                <div class="protection-level">system-wide process monitoring</div>
+                <div class="feature-icon mono">automatic detection</div>
+                <h3 class="serif">Intelligent Activation</h3>
+                <p class="serif">Automatically begins monitoring when Echo VR launches and gracefully terminates when the game closes, requiring no user interaction.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.3s">
-                <div class="feature-icon mono">performance</div>
-                <h3 class="mono">zero overhead</h3>
-                <p>Optimized monitoring algorithms ensure no measurable impact on game performance or system stability.</p>
-                <div class="protection-level">&lt;1% CPU usage</div>
+                <div class="feature-icon mono">performance optimized</div>
+                <h3 class="serif">Zero Overhead</h3>
+                <p class="serif">Carefully optimized algorithms ensure no measurable impact on game performance, maintaining the competitive experience.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.4s">
-                <div class="feature-icon mono">integration</div>
-                <h3 class="mono">discord presence</h3>
-                <p><span class="discord-rpc">Discord RPC</span> integration shows your integrity status to friends while playing.</p>
-                <div class="protection-level">optional integration</div>
+                <div class="feature-icon mono">discord integration</div>
+                <h3 class="serif">Rich Presence</h3>
+                <p class="serif">Displays your integrity status to friends through optional Discord Rich Presence integration while maintaining privacy.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.5s">
-                <div class="feature-icon mono">portability</div>
-                <h3 class="mono">standalone executable</h3>
-                <p>No installation required. Single portable executable with no system modifications or registry changes.</p>
-                <div class="protection-level">no admin privileges required</div>
+                <div class="feature-icon mono">portable design</div>
+                <h3 class="serif">Standalone Execution</h3>
+                <p class="serif">Requires no installation or system modifications. A single portable executable that respects your system's integrity.</p>
             </div>
             <div class="feature-card animate-up" style="animation-delay: 0.6s">
-                <div class="feature-icon mono">transparency</div>
-                <h3 class="mono">detailed logging</h3>
-                <p>Comprehensive logging system provides complete visibility into monitoring activities and integrity status.</p>
-                <div class="protection-level">debug mode available</div>
+                <div class="feature-icon mono">transparent logging</div>
+                <h3 class="serif">Complete Visibility</h3>
+                <p class="serif">Provides comprehensive logging of all monitoring activities with optional debug mode for complete transparency.</p>
             </div>
         </div>
     </section>
 
-    <!-- Detection Methods -->
-    <section id="detection" class="section" style="background: var(--bg-tertiary); border-radius: 8px; margin: 2rem auto;">
+    <!-- Detection Section -->
+    <section id="detection" class="detection-section">
         <div class="section-header animate-up">
-            <h2 class="mono">detection methods</h2>
-            <p>Multi-layered detection system for comprehensive protection.</p>
+            <h2 class="serif">Detection Methods</h2>
+            <p class="serif">Multi-layered protection through sophisticated analysis and verification.</p>
         </div>
         <div class="detection-grid">
             <div class="detection-card animate-up" style="animation-delay: 0.1s">
                 <div class="detection-header">
-                    <div class="detection-name mono">memory integrity</div>
+                    <div class="detection-name mono">Memory Analysis</div>
                     <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
                 </div>
-                <div class="detection-desc">Continuous validation of game memory structures to detect unauthorized modifications.</div>
+                <div class="detection-desc serif">Continuous validation of game memory integrity through sophisticated analysis techniques.</div>
             </div>
             <div class="detection-card animate-up" style="animation-delay: 0.2s">
                 <div class="detection-header">
-                    <div class="detection-name mono">pattern detection</div>
+                    <div class="detection-name mono">Pattern Detection</div>
                     <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
                 </div>
-                <div class="detection-desc">Heuristic analysis to identify known cheat signatures and behavioral patterns.</div>
+                <div class="detection-desc serif">Identification of anomalous patterns and signatures through heuristic analysis.</div>
             </div>
             <div class="detection-card animate-up" style="animation-delay: 0.3s">
                 <div class="detection-header">
-                    <div class="detection-name mono">anomaly detection</div>
+                    <div class="detection-name mono">Behavioral Analysis</div>
                     <span class="status-indicator status-good"><span class="status-dot good"></span> active</span>
                 </div>
-                <div class="detection-desc">Real-time monitoring for statistical anomalies in gameplay metrics and inputs.</div>
+                <div class="detection-desc serif">Real-time monitoring of gameplay metrics to detect statistical anomalies and irregularities.</div>
             </div>
             <div class="detection-card animate-up" style="animation-delay: 0.4s">
                 <div class="detection-header">
-                    <div class="detection-name mono">process validation</div>
+                    <div class="detection-name mono">Process Validation</div>
                     <span class="status-indicator status-neutral"><span class="status-dot neutral"></span> monitoring</span>
                 </div>
-                <div class="detection-desc">Validation of running processes and modules to detect external interference.</div>
+                <div class="detection-desc serif">Continuous verification of system processes to ensure game environment integrity.</div>
             </div>
         </div>
     </section>
 
-    <!-- Anti-Cheat Process -->
+    <!-- Process Flow -->
     <section class="section">
         <div class="section-header animate-up">
-            <h2 class="mono">anti-cheat process</h2>
-            <p>Deterministic verification methodology for competitive integrity.</p>
+            <h2 class="serif">Monitoring Process</h2>
+            <p class="serif">A refined methodology for ensuring competitive integrity through precise verification.</p>
         </div>
-        <div class="process">
+        <div class="process-flow">
             <div class="process-step animate-up" style="animation-delay: 0.1s">
-                <div class="step-number mono">01</div>
+                <div class="step-number serif">I</div>
                 <div class="step-content">
-                    <h3 class="mono">detection</h3>
-                    <p>Continuous system monitoring for Echo VR process execution and game session initialization.</p>
+                    <h3 class="serif">Detection & Initialization</h3>
+                    <p class="serif">Continuous system monitoring identifies Echo VR execution and initializes the monitoring service with precise timing.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.2s">
-                <div class="step-number mono">02</div>
+                <div class="step-number serif">II</div>
                 <div class="step-content">
-                    <h3 class="mono">analysis</h3>
-                    <p>Multi-layered scanning of critical game structures using proprietary detection algorithms.</p>
+                    <h3 class="serif">Analysis & Verification</h3>
+                    <p class="serif">Multi-layered scanning of critical game structures using sophisticated analysis algorithms for comprehensive protection.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.3s">
-                <div class="step-number mono">03</div>
+                <div class="step-number serif">III</div>
                 <div class="step-content">
-                    <h3 class="mono">validation</h3>
-                    <p>Continuous integrity validation throughout gameplay sessions with real-time anomaly detection.</p>
+                    <h3 class="serif">Continuous Monitoring</h3>
+                    <p class="serif">Real-time integrity validation throughout gameplay sessions with immediate detection of any anomalies or irregularities.</p>
                 </div>
             </div>
             <div class="process-step animate-up" style="animation-delay: 0.4s">
-                <div class="step-number mono">04</div>
+                <div class="step-number serif">IV</div>
                 <div class="step-content">
-                    <h3 class="mono">reporting</h3>
-                    <p>Status monitoring through system indicators and optional Discord Rich Presence integration.</p>
+                    <h3 class="serif">Status & Reporting</h3>
+                    <p class="serif">Discreet status indication through system indicators and optional Discord Rich Presence integration for complete transparency.</p>
                 </div>
             </div>
         </div>
@@ -993,22 +966,22 @@
     <!-- Download Section -->
     <section id="download" class="download-section">
         <div class="download-info animate-up">
-            <h2 class="mono">download</h2>
-            <p>Current version: 1.0.0 · Portable Windows executable</p>
+            <h2 class="serif">Download</h2>
+            <p class="serif">Version 1.0.0 — Portable Windows executable with no installation required.</p>
         </div>
         
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <a href="#" class="button-primary mono" style="font-size: 0.9rem; padding: 1rem 2.25rem;">download echono.exe</a>
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <a href="https://github.com/isodash/echono" class="button-primary serif" style="font-size: 1rem; padding: 1.1rem 2.5rem;">Download echono.exe</a>
         </div>
         
         <div class="requirements animate-up" style="animation-delay: 0.2s">
-            <h3 class="mono">requirements</h3>
+            <h3 class="serif">System Requirements</h3>
             <ul>
-                <li>Windows 10 or newer (64-bit)</li>
-                <li>Echo VR via Oculus/Meta PC application</li>
-                <li>4GB system memory minimum</li>
-                <li>50MB available storage</li>
-                <li>No installation or administrator privileges required</li>
+                <li class="serif">Windows 10 or newer (64-bit architecture)</li>
+                <li class="serif">Echo VR via Oculus/Meta PC application</li>
+                <li class="serif">4GB system memory minimum</li>
+                <li class="serif">50MB available storage space</li>
+                <li class="serif">No installation or administrator privileges required</li>
             </ul>
         </div>
         
@@ -1020,11 +993,12 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-logo mono">echono</div>
+            <div class="footer-logo serif">echono</div>
             <div class="footer-links">
-                <a href="mailto:contact@echono.dev" class="mono">contact</a>
-                <a href="#privacy" class="mono">privacy</a>
-                <a href="#terms" class="mono">terms</a>
+                <a href="https://github.com/isodash/echono" class="serif">GitHub</a>
+                <a href="mailto:contact@echono.dev" class="serif">Contact</a>
+                <a href="#privacy" class="serif">Privacy</a>
+                <a href="#terms" class="serif">Terms</a>
             </div>
         </div>
         <div class="copyright mono">
@@ -1036,7 +1010,7 @@
     <script>
         // Intersection Observer for animations
         const observerOptions = {
-            threshold: 0.15,
+            threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
 
@@ -1056,40 +1030,50 @@
                 observer.observe(el);
             });
 
-            // Smooth scroll for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
             // Status indicator animation
             const statusDots = document.querySelectorAll('.status-dot');
             statusDots.forEach(dot => {
                 if (dot.classList.contains('good')) {
                     dot.style.animation = 'pulse 3s infinite';
                 } else if (dot.classList.contains('warning')) {
-                    dot.style.animation = 'pulse 1.5s infinite';
+                    dot.style.animation = 'pulse 2s infinite';
                 }
             });
 
-            // Add interactive hover effects
+            // Fix button shimmer effect by properly setting the initial position
+            const buttons = document.querySelectorAll('.button-primary, .button-warning');
+            buttons.forEach(button => {
+                const shimmer = button.querySelector('::before');
+                if (shimmer) {
+                    button.style.position = 'relative';
+                    button.style.overflow = 'hidden';
+                }
+            });
+
+            // Add smooth hover effects
             document.querySelectorAll('.feature-card').forEach(card => {
                 card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-2px)';
+                    card.style.transform = 'translateY(-4px)';
                 });
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Handle smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
         });
