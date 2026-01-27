@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>echono · Echo VR Anti-Cheat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f1116;
+            --bg-secondary: #161920;
+            --bg-tertiary: #1e222c;
+            --text-primary: #f5f5f7;
+            --text-secondary: #b4b9c3;
+            --text-tertiary: #7a8190;
+            --accent-primary: #b4e6b4;
+            --accent-warning: #ffb4b4;
+            --accent-connecting: #ffeb96;
+            --border-color: #2a2f3d;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 17, 22, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 strong {
+            font-weight: 600;
+            -webkit-text-fill-color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .button-primary {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition);
+            border: none;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(180, 230, 180, 0.3);
+        }
+
+        .button-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition);
+            border: 2px solid var(--border-color);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 35px var(--shadow-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* How It Works */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+        }
+
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+            margin: 4rem 0;
+            border-radius: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-info {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .download-info h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .download-info p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .system-requirements {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            margin: 3rem auto;
+            text-align: left;
+        }
+
+        .system-requirements h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .system-requirements ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .system-requirements li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .system-requirements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .copyright {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">echono</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#download">Download</a>
+                <a href="https://github.com/isodash/echono" class="cta-button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-in">
+            <h1>A humble <strong>anti-cheat</strong> for Echo VR</h1>
+            <p>Lightweight client-side integrity monitoring that runs silently in the background. No intrusive checks, no performance impact — just clean, fair gameplay.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="button-primary">Download echono</a>
+                <a href="#how-it-works" class="button-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="section-header">
+            <h2>Designed to be Unobtrusive</h2>
+            <p>echono operates with minimal footprint, focusing only on what matters.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card animate-in" style="animation-delay: 0.1s">
+                <div class="feature-icon">🛡️</div>
+                <h3>Memory Integrity</h3>
+                <p>Continuous monitoring of game memory for unauthorized modifications and abnormal values that indicate cheating.</p>
+            </div>
+            <div class="feature-card animate-in" style="animation-delay: 0.2s">
+                <div class="feature-icon">⚡</div>
+                <h3>Zero Performance Impact</h3>
+                <p>Optimized scanning that uses minimal system resources. You won't notice it's running.</p>
+            </div>
+            <div class="feature-card animate-in" style="animation-delay: 0.3s">
+                <div class="feature-icon">🤖</div>
+                <h3>Auto-Detection</h3>
+                <p>Automatically starts monitoring when Echo VR launches and stops when it closes.</p>
+            </div>
+            <div class="feature-card animate-in" style="animation-delay: 0.4s">
+                <div class="feature-icon">🎮</div>
+                <h3>Discord Integration</h3>
+                <p>Optional Discord Rich Presence shows your integrity status while playing.</p>
+            </div>
+            <div class="feature-card animate-in" style="animation-delay: 0.5s">
+                <div class="feature-icon">🔄</div>
+                <h3>Automatic Updates</h3>
+                <p>Stay protected with the latest detection methods through seamless updates.</p>
+            </div>
+            <div class="feature-card animate-in" style="animation-delay: 0.6s">
+                <div class="feature-icon">📊</div>
+                <h3>Detailed Logging</h3>
+                <p>Optional debug mode provides transparency into what's being monitored.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section" style="background: var(--bg-secondary); border-radius: 20px; margin: 2rem auto;">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Simple, transparent, and effective protection</p>
+        </div>
+        <div class="steps">
+            <div class="step animate-in" style="animation-delay: 0.1s">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Background Monitoring</h3>
+                    <p>echono runs quietly in your system tray, automatically detecting when Echo VR launches.</p>
+                </div>
+            </div>
+            <div class="step animate-in" style="animation-delay: 0.2s">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Memory Analysis</h3>
+                    <p>Continuous scanning of game memory for known cheat signatures and abnormal values.</p>
+                </div>
+            </div>
+            <div class="step animate-in" style="animation-delay: 0.3s">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Real-time Protection</h3>
+                    <p>Immediate detection of integrity violations with detailed logging for transparency.</p>
+                </div>
+            </div>
+            <div class="step animate-in" style="animation-delay: 0.4s">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Clean Interface</h3>
+                    <p>Minimalist application with status indicators and optional advanced settings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download-section">
+        <div class="download-info animate-in">
+            <h2>Get echono</h2>
+            <p>Download the latest version. Installation is straightforward and takes less than a minute.</p>
+        </div>
+        <a href="#" class="button-primary" style="font-size: 1.1rem; padding: 1.2rem 3rem;">Download v1.0.0</a>
+        
+        <div class="system-requirements animate-in" style="animation-delay: 0.2s">
+            <h3>System Requirements</h3>
+            <ul>
+                <li>Windows 10 or newer (64-bit)</li>
+                <li>Echo VR installed via Oculus/Meta PC app</li>
+                <li>4GB RAM minimum</li>
+                <li>10MB free disk space</li>
+                <li>Administrator privileges for installation only</li>
+            </ul>
+        </div>
+        
+        <p style="color: var(--text-secondary); margin-top: 2rem; font-size: 0.9rem;">
+            echono is open source. View the source code on <a href="https://github.com/isodash/echono" style="color: var(--accent-primary); text-decoration: none;">GitHub</a>.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">echono</div>
+            <div class="footer-links">
+                <a href="https://github.com/isodash/echono">GitHub</a>
+                <a href="https://discord.gg/your-invite-link">Discord</a>
+                <a href="mailto:contact@example.com">Contact</a>
+                <a href="https://github.com/isodash/echono/issues">Report Issue</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2024 echono. Not affiliated with Ready At Dawn or Meta. Echo VR is a registered trademark of Ready At Dawn.
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with the animate-in class
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.feature-card, .step, .download-info, .system-requirements');
+            elements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
