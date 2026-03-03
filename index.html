@@ -1,369 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>echono</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>isodash</title>
     <style>
         :root {
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --border: #222222;
-            --text: #f0f0f0;
-            --text-secondary: #888888;
-            --neutral: #ffffff;
-            --good: #2ecc71;
-            --warning: #e74c3c;
+            --bg: #080808;
+            --text: #f2ead9;
+            --muted: #c9c0ad;
+            --line: #24211c;
+            --accent: #e9dcc3;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-            font-weight: 400;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
+            font-family: "Times New Roman", Times, serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% -10%, rgba(233, 220, 195, 0.07), transparent 45%);
         }
 
         .container {
-            max-width: 720px;
+            max-width: 780px;
             margin: 0 auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-
-        /* Header */
-        header {
-            padding: 40px 0 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-size: 32px;
-            font-weight: 500;
-            letter-spacing: -2px;
-            color: var(--neutral);
-            margin-bottom: 8px;
-        }
-
-        .tagline {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Main Content */
-        main {
-            padding: 40px 0;
-            flex: 1;
+            padding: 96px 28px 104px;
         }
 
         .hero {
-            text-align: center;
-            padding: 40px 0;
+            padding-bottom: 48px;
+            margin-bottom: 64px;
         }
 
-        .hero h1 {
-            font-size: 20px;
+        .name {
+            font-size: clamp(2.4rem, 8vw, 4.2rem);
             font-weight: 400;
-            color: var(--text);
-            margin-bottom: 20px;
-            line-height: 1.4;
+            line-height: 1.02;
+            margin-bottom: 0;
         }
 
-        .hero h1 .highlight {
-            color: var(--warning);
-            font-weight: 500;
-        }
-
-        .hero p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            max-width: 480px;
-            margin: 0 auto 32px;
-        }
-
-        .cta {
-            display: inline-block;
-            padding: 12px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--neutral);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta:hover {
-            border-color: var(--good);
-            color: var(--good);
-        }
-
-        /* Features */
-        .features {
-            padding: 40px 0;
-        }
-
-        .features-grid {
-            display: grid;
-            gap: 24px;
-        }
-
-        .feature {
-            padding: 20px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-        }
-
-        .feature-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .feature-icon {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .feature-icon.good {
-            background: var(--good);
-            box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
-        }
-
-        .feature-icon.warning {
-            background: var(--warning);
-            box-shadow: 0 0 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .feature-icon.neutral {
-            background: var(--neutral);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-        }
-
-        .feature-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--neutral);
-        }
-
-        .feature-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Download */
-        .download {
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .download h2 {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--neutral);
-            margin-bottom: 16px;
-        }
-
-        .requirements {
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
-        }
-
-        .requirements h3 {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-
-        .requirements-list {
+        .links-list {
             list-style: none;
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            border-top: 1px solid var(--line);
         }
 
-        .requirements-list li {
-            margin-bottom: 8px;
+        .links-list li {
+            border-bottom: 1px solid var(--line);
         }
 
-        .requirements-list li::before {
-            content: "→";
-            color: var(--neutral);
-            margin-right: 8px;
-            opacity: 0.5;
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .footer-links {
+        .links-list a {
             display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-bottom: 24px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
+            justify-content: space-between;
+            gap: 18px;
             text-decoration: none;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--text);
+            padding: 20px 2px;
             transition: color 0.2s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--neutral);
+        .links-list a:hover {
+            color: var(--accent);
         }
 
-        .copyright {
-            font-size: 11px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .link-name {
+            font-size: 1.1rem;
+            position: relative;
         }
 
-        .copyright a {
-            color: var(--neutral);
-            text-decoration: none;
+        .link-name::after {
+            content: "↗";
+            font-size: 0.9rem;
+            margin-left: 8px;
+            opacity: 0.55;
         }
 
-        .copyright a:hover {
-            text-decoration: underline;
+        footer {
+            margin-top: 84px;
+            padding-top: 30px;
+            color: var(--muted);
+            font-size: 0.98rem;
+            letter-spacing: 0.03em;
         }
 
-        /* Responsive */
         @media (max-width: 640px) {
             .container {
-                padding: 0 16px;
+                padding-top: 68px;
+                padding-bottom: 78px;
             }
 
-            .logo {
-                font-size: 28px;
-            }
-
-            .hero {
-                padding: 20px 0;
-            }
-
-            .hero h1 {
-                font-size: 18px;
-            }
-
-            .footer-links {
+            .links-list a {
                 flex-direction: column;
-                gap: 12px;
+                gap: 5px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo">echono</div>
-            <div class="tagline">anti-cheat for Echo VR</div>
+        <header class="hero">
+            <h1 class="name">isodash</h1>
         </header>
 
-        <!-- Main Content -->
         <main>
-            <section class="hero">
-                <h1>A background service that <span class="highlight">detects cheating</span> in Echo VR</h1>
-                <p>Runs silently. Monitors continuously. Requires no installation.</p>
-                <a href="https://github.com/isodash/echono" class="cta">Download</a>
-            </section>
-
-            <section class="features">
-                <div class="features-grid">
-                    <div class="feature">
-                        <div class="feature-header">
-                            <div class="feature-icon warning"></div>
-                            <div class="feature-title">Cheat Detection</div>
-                        </div>
-                        <p class="feature-desc">Real-time monitoring for unauthorized modifications and suspicious activity within Echo VR.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-header">
-                            <div class="feature-icon neutral"></div>
-                            <div class="feature-title">Background Operation</div>
-                        </div>
-                        <p class="feature-desc">Starts automatically when Echo VR launches, stops when it closes. Zero interaction required.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <div class="feature-header">
-                            <div class="feature-icon good"></div>
-                            <div class="feature-title">No Performance Impact</div>
-                        </div>
-                        <p class="feature-desc">Optimized to use minimal resources. You won't notice it's running.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="download">
-                <h2>Download</h2>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 24px;">
-                    Version 1.0.0 · Portable executable
-                </p>
-                
-                <a href="https://github.com/isodash/echono" class="cta" style="display: inline-block; margin-bottom: 32px;">Download from GitHub</a>
-
-                <div class="requirements">
-                    <h3>Requirements</h3>
-                    <ul class="requirements-list">
-                        <li>Windows 10 or newer (64-bit)</li>
-                        <li>Echo VR via Oculus/Meta PC app</li>
-                        <li>No installation required</li>
-                        <li>No administrator privileges</li>
-                    </ul>
-                </div>
+            <section>
+                <ul class="links-list">
+                    <li>
+                        <a href="https://github.com/isodash?tab=repositories">
+                            <span class="link-name">All Projects</span>
+                        </a>
+                    </li>
+                </ul>
             </section>
         </main>
 
-        <!-- Footer -->
         <footer>
-            <div class="footer-links">
-                <a href="https://github.com/isodash/echono">GitHub</a>
-            </div>
-            <div class="copyright">
-                © 2024 echono · Not affiliated with Ready At Dawn or Meta<br>
-                Echo VR is a trademark of Ready At Dawn Studios
-            </div>
+            © 2026 isodash
         </footer>
     </div>
 </body>
+
 </html>
