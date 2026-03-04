@@ -1,0 +1,117 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>echono</title>
+    <style>
+        :root {
+            --bg: #080808;
+            --text: #f2ead9;
+            --muted: #c9c0ad;
+            --line: #24211c;
+            --accent: #e9dcc3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% -10%, rgba(233, 220, 195, 0.07), transparent 45%);
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 96px 28px 104px;
+        }
+
+        .hero {
+            padding-bottom: 48px;
+            margin-bottom: 64px;
+        }
+
+        .name {
+            font-size: clamp(2.4rem, 8vw, 4.2rem);
+            font-weight: 400;
+            line-height: 1.02;
+            margin-bottom: 0;
+        }
+
+        .links-list {
+            list-style: none;
+            border-top: 1px solid var(--line);
+        }
+
+        .links-list li {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .links-list a {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            text-decoration: none;
+            color: var(--text);
+            padding: 20px 2px;
+            transition: color 0.2s ease;
+        }
+
+        .links-list a:hover {
+            color: var(--accent);
+        }
+
+        .link-name {
+            font-size: 1.1rem;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1 class="name">echono</h1>
+            <p style="color: var(--muted); margin-top: 1rem;">Setup installer download</p>
+        </header>
+
+        <main>
+            <section>
+                <ul class="links-list">
+                    <li>
+                        <a href="echono-setup.exe">
+                            <span class="link-name">Download Installer</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/">
+                            <span class="link-name">← Back to home</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
