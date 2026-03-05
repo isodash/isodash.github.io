@@ -12,6 +12,18 @@
             --muted: #c9c0ad;
             --line: #24211c;
             --accent: #e9dcc3;
+            --glow: rgba(233, 220, 195, 0.07);
+            --btn-bg-start: rgba(255, 255, 255, 0.02);
+        }
+
+        body.light-mode {
+            --bg: #f2ead9;
+            --text: #080808;
+            --muted: #665c4a;
+            --line: #d6cfc2;
+            --accent: #5c4d3c;
+            --glow: rgba(0, 0, 0, 0.04);
+            --btn-bg-start: rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -30,6 +42,7 @@
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body::before {
@@ -37,7 +50,8 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(circle at 50% -10%, rgba(233, 220, 195, 0.07), transparent 45%);
+            background: radial-gradient(circle at 50% -10%, var(--glow), transparent 45%);
+            transition: background 0.3s ease;
         }
 
         .container {
@@ -56,6 +70,14 @@
             font-weight: 400;
             line-height: 1.02;
             margin-bottom: 0;
+            text-shadow: 0 0 30px rgba(233, 220, 195, 0.15);
+            transition: text-shadow 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .name:hover {
+            text-shadow: 0 0 50px rgba(233, 220, 195, 0.4);
+            transform: scale(1.02);
         }
 
         .links-list {
@@ -74,11 +96,12 @@
             text-decoration: none;
             color: var(--text);
             padding: 20px 2px;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
         }
 
         .links-list a:hover {
             color: var(--accent);
+            padding-left: 10px;
         }
 
         .link-name {
@@ -112,16 +135,70 @@
                 gap: 5px;
             }
         }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--text);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding-bottom: 3px; 
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(15deg);
+            background: var(--btn-bg-start);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-up {
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
     </style>
 </head>
 
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☼</button>
     <div class="container">
-        <header class="hero">
+        <header class="hero animate-up">
             <h1 class="name">isodash</h1>
         </header>
 
-        <main>
+        <main class="animate-up delay-1">
             <section>
                 <ul class="links-list">
                     <li>
@@ -138,10 +215,17 @@
             </section>
         </main>
 
-        <footer>
+        <footer class="animate-up delay-2">
             © 2026 isodash
         </footer>
     </div>
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            btn.textContent = document.body.classList.contains('light-mode') ? '☾' : '☼';
+        });
+    </script>
 </body>
 
 </html>

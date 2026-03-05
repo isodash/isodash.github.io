@@ -12,6 +12,20 @@
             --muted: #c9c0ad;
             --line: #24211c;
             --accent: #e9dcc3;
+            --glow: rgba(233, 220, 195, 0.07);
+            --btn-bg-start: rgba(255, 255, 255, 0.02);
+            --btn-shine: rgba(233, 220, 195, 0.05);
+        }
+
+        body.light-mode {
+            --bg: #f2ead9;
+            --text: #080808;
+            --muted: #665c4a;
+            --line: #d6cfc2;
+            --accent: #5c4d3c;
+            --glow: rgba(0, 0, 0, 0.04);
+            --btn-bg-start: rgba(0, 0, 0, 0.03);
+            --btn-shine: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -30,6 +44,7 @@
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body::before {
@@ -37,7 +52,8 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(circle at 50% -10%, rgba(233, 220, 195, 0.07), transparent 45%);
+            background: radial-gradient(circle at 50% -10%, var(--glow), transparent 45%);
+            transition: background 0.3s ease;
         }
 
         .container {
@@ -56,6 +72,14 @@
             font-weight: 400;
             line-height: 1.02;
             margin-bottom: 0;
+            text-shadow: 0 0 30px rgba(233, 220, 195, 0.15);
+            transition: text-shadow 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .name:hover {
+            text-shadow: 0 0 50px rgba(233, 220, 195, 0.4);
+            transform: scale(1.02);
         }
 
         .links-list {
@@ -85,33 +109,178 @@
             font-size: 1.1rem;
             position: relative;
         }
+
+        /* --- New Pizzazz Styles --- */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(233, 220, 195, 0.1);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(233, 220, 195, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(233, 220, 195, 0);
+            }
+        }
+
+        .animate-up {
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-left: 0;
+            line-height: 1.8;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .feature-list li:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .feature-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            opacity: 0.7;
+        }
+
+        .cta-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text);
+            background: linear-gradient(145deg, var(--btn-bg-start) 0%, transparent 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--btn-shine), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--text);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding-bottom: 3px;
+            line-height: 1;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(15deg);
+            background: var(--btn-bg-start);
+        }
     </style>
 </head>
 
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☼</button>
     <div class="container">
-        <header class="hero">
+        <header class="hero animate-up">
             <h1 class="name">echono</h1>
-            <p style="color: var(--muted); margin-top: 1rem;">Setup installer download</p>
+            <p style="color: var(--muted); margin-top: 1rem;">A lightweight, robust anticheat for Echo VR.</p>
         </header>
 
         <main>
-            <section>
-                <ul class="links-list">
-                    <li>
-                        <a href="echono-setup.exe">
-                            <span class="link-name">Download Installer</span>
-                        </a>
-                    </li>
-                    <li>
+            <section style="margin-bottom: 4rem; color: var(--muted);" class="animate-up delay-1">
+                <p style="margin-bottom: 1.5rem; color: var(--text); font-size: 1.05rem;">
+                    echono works by actively ensuring no memory modifications are made to the game program
+                    during runtime.
+                </p>
+                <ul class="feature-list">
+                    <li>Detects and prevents memory modifications</li>
+                    <li>Seamless Discord RPC integration</li>
+                    <li>Automatically opens and closes alongside the game</li>
+                </ul>
+            </section>
+
+            <section class="animate-up delay-2">
+                <a href="echono-setup.exe" class="cta-button">
+                    <span class="link-name">Download Installer</span>
+                    <span style="opacity: 0.5; font-size: 0.9rem;">Windows x64</span>
+                </a>
+
+                <ul class="links-list" style="border-top: none;">
+                    <li style="border-bottom: none; border-top: 1px solid var(--line);">
                         <a href="/">
-                            <span class="link-name">← Back to home</span>
+                            <span class="link-name" style="font-size: 1rem; opacity: 0.8;">← Back to home</span>
                         </a>
                     </li>
                 </ul>
             </section>
         </main>
     </div>
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            btn.textContent = document.body.classList.contains('light-mode') ? '☾' : '☼';
+        });
+    </script>
 </body>
 
 </html>
